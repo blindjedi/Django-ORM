@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: django_orm_practice_web
+    build:
+      context: .
+    command: python3 -m http.server 8000
+    volumes:
+      - .:/code
+      - ~/.ipython:/root/.ipython  # Mount for shell customization
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+
+  db:
+    container_name: django_orm_practice_db
+    image: postgres:15-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: django_orm_practice
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
