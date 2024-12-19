@@ -73,10 +73,16 @@ WSGI_APPLICATION = 'django_orm_practice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import os
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'django_orm_practice'),  # Default to 'django_orm_practice' if not set
+        'USER': os.getenv('POSTGRES_USER', 'user'),               # Default to 'user' if not set
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),   # Default to 'password' if not set
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),                 # Default to 'db' if not set
+        'PORT': os.getenv('POSTGRES_PORT', 5432),                 # Default to 5432 if not set
     }
 }
 
